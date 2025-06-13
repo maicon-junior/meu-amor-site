@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Você me ama?</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background-color: black;
+      color: white;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      text-align: center;
+    }
+
+    button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: 0;
+      font-size: 24px;
+      animation: floatUp 4s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    #carousel {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      aspect-ratio: 1 / 1;
+      margin: 40px auto;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    #carousel img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      object-fit: cover;
+    }
+
+    #carousel img.active {
+      opacity: 1;
+    }
+
+    #loveTimer {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    #finalScreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      overflow-y: auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    #finalScreen p:last-of-type {
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5em;
+        margin: 10px;
+      }
+
+      button {
+        font-size: 1em;
+        padding: 10px 16px;
+      }
+
+      #carousel {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        margin: 40px 0;
+      }
+
+      #loveTimer {
+        font-size: 1em;
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="screen1">
+    <h1>Mozinho, você me ama?</h1>
+    <button onclick="goToScreen2()">Sim 💖</button>
+    <button onclick="goToSadScreen()">Não 😢</button>
+  </div>
+
+  <div id="screen2" class="hidden">
+    <h1>O quanto você me ama?</h1>
+    <button id="muitoBtn" onclick="handleMuitoClick()">Muito</button>
+    <button id="pouquinhoBtn" onclick="goToSadScreen()">Bem pouquinho</button>
+  </div>
+
+  <div id="sadScreen" class="hidden">
+    <h1>Mas mozão te ama tanto ☹️ </h1>
+  </div>
+
+  <div id="finalScreen" class="hidden">
+    <h1>Mas eu te amo muito mais 💘</h1>
+    <div id="loveTimer"></div>
+    <div id="carousel">
+      <img src="images/img1.jpeg" class="active">
+      <img src="images/img2.jpeg">
+      <img src="images/img3.jpeg">
+      <img src="images/img4.jpeg">
+      <img src="images/img5.jpeg">
+      <img src="images/img6.jpeg">
+      <img src="images/img7.jpeg">
+      <img src="images/img8.jpeg">
+      <img src="images/img9.jpeg">
+      <img src="images/img10.jpeg">
+    </div>
+    <p>Isso é para a pessoa a quem eu mais amo no mundo, que me mudou para quem eu sou hoje, e me aceitou do jeito que eu era, a quem me ajuda quando preciso, e me consola nos momentos tristes.</p>
+    <p>A pessoa que eu visito quase todos os finais de semana... na verdade, sempre que tenho a oportunidade eu quero ver você.</p>
+    <p>Meu mô, mozinho, neném, gatinha... tem vários jeitos de dizer o quanto você é importante para mim e nunca deixei de te chamar assim, até nos piores momentos.</p>
+    <p>Ter você ao meu lado por tanto tempo me fez perceber que eu realmente posso ser importante para alguém, e o quanto faz falta ter uma pessoa preciosa longe.</p>
+    <p>Eu só quero que você saiba que eu te agradeço, e muito, por me amar por tanto tempo apesar dos meus erros, falhas e falta de maturidade. Mas é assim que eu sou: sempre quis fazer as pessoas rirem — principalmente você.</p>
+    <p>Se eu pudesse te entregaria um lindo buquê de flores, lhe dava o melhor presente, fazia tudo por você. Mas não tenho como fazer isso agora, então, para comemorar um dia tão importante, eu não queria te deixar sem nada.</p>
+    <p>Por isso fiz isso para você. É algo que sempre vai estar guardado, e que mostra o tanto que eu te amo e te agradeço por tudo o que fez por mim.</p>
+    <p>Como você me disse: "não sei como se escreve uma carta" — e olha que coincidência, eu não sei como terminar. Podia falar de você por muitas linhas, mas posso resumir em apenas uma:</p>
+    <p><strong>Eu amo você, meu amor ❤️</strong></p>
+  </div>
+
+  <script>
+    let muitoClickCount = 0;
+    const muitoBtn = document.getElementById('muitoBtn');
+    const pouquinhoBtn = document.getElementById('pouquinhoBtn');
+    const screens = {
+      screen1: document.getElementById('screen1'),
+      screen2: document.getElementById('screen2'),
+      sadScreen: document.getElementById('sadScreen'),
+      finalScreen: document.getElementById('finalScreen')
+    };
+
+    function showScreen(name) {
+      Object.values(screens).forEach(s => s.classList.add('hidden'));
+      screens[name].classList.remove('hidden');
+    }
+
+    function goToScreen2() {
+      showScreen('screen2');
+    }
+
+    function goToSadScreen() {
+      showScreen('sadScreen');
+    }
+
+    function handleMuitoClick() {
+      muitoClickCount++;
+      const textos = ["Muito! ❤️", "Muitão! ❤️", "Amo demais! ❤️", "Muuuuitão! ❤️", "Um montão! ❤️", "Um Demaaaaais! ❤️", "Sem fim! ❤️", "Imensamente! ❤️", "Além do universo! ❤️", "Infinito! ❤️"];
+      muitoBtn.textContent = textos[Math.min(muitoClickCount, textos.length - 1)];
+
+      if (muitoClickCount >= 10) {
+        showScreen('finalScreen');
+        startImageFade();
+        startHearts();
+        startLoveTimer();
+      } else {
+        let newX, newY;
+        const btnWidth = muitoBtn.offsetWidth;
+        const btnHeight = muitoBtn.offsetHeight;
+        let btnRect = pouquinhoBtn.getBoundingClientRect();
+
+        do {
+          newX = Math.random() * (window.innerWidth - btnWidth);
+          newY = Math.random() * (window.innerHeight - btnHeight);
+        } while (
+          newX + btnWidth > btnRect.left && newX < btnRect.right &&
+          newY + btnHeight > btnRect.top && newY < btnRect.bottom
+        );
+
+        muitoBtn.style.position = 'absolute';
+        muitoBtn.style.left = `${newX}px`;
+        muitoBtn.style.top = `${newY}px`;
+      }
+    }
+
+    function startImageFade() {
+      const images = document.querySelectorAll('#carousel img');
+      let index = 0;
+      setInterval(() => {
+        images.forEach((img, i) => img.classList.toggle('active', i === index));
+        index = (index + 1) % images.length;
+      }, 3000);
+    }
+
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
+        heart.textContent = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }, 300);
+    }
+
+    function startLoveTimer() {
+      const startDate = new Date("2022-11-01T00:00:00");
+      const display = document.getElementById("loveTimer");
+
+      function updateTimer() {
+        const now = new Date();
+        const diff = now - startDate;
+        const seconds = Math.floor(diff / 1000) % 60;
+        const minutes = Math.floor(diff / (1000 * 60)) % 60;
+        const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        display.textContent = `Estamos juntos há ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos 💞`;
+      }
+
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+  </script>
+</body>
+</html>
